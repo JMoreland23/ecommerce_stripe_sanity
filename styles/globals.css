@@ -117,6 +117,7 @@ width: 100%;
  background-color: #ebebeb;
   transform: scale(1, 1);
   transition: transform 0.5s ease;
+  padding: 20px;
 }
 
 .product-name{
@@ -130,7 +131,7 @@ width: 100%;
 
 .hero-banner-container{
   padding: 100px 40px;
-  background-color: #dcdcdc;
+  background: linear-gradient(to bottom, #0b3d0f, #a1e19a);
   border-radius: 15px;
   position: relative;
   height: 500px;
@@ -426,7 +427,7 @@ padding: 30px 65px;
 .product-detail-image{
   border-radius: 15px;
    background-color: #ebebeb;
-
+padding: 20px;
   width: 400px;
   height: 400px;
   cursor: pointer;
