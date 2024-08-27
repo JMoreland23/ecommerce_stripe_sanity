@@ -1,4 +1,3 @@
-import { buffer } from 'micro';
 import Stripe from 'stripe';
 import nodemailer from 'nodemailer';
 
@@ -10,6 +9,14 @@ export const config = {
   },
 };
 
+const buffer = async (req) => {
+  const chunks = [];
+  for await (const chunk of req) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+  }
+  return Buffer.concat(chunks);
+};
+
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const buf = await buffer(req);
@@ -18,7 +25,6 @@ export default async function handler(req, res) {
 
     try {
       event = stripe.webhooks.constructEvent(buf, sig, process.env.STRIPE_WEBHOOK_SECRET);
-      console.log('Webhook received');
     } catch (err) {
       console.error('Webhook signature verification failed.', err.message);
       return res.status(400).send(`Webhook Error: ${err.message}`);
@@ -28,16 +34,19 @@ export default async function handler(req, res) {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
 
+      // Handle line items or display items
+      const items = session.line_items || session.display_items;
+      const cartItems = items
+        ? items.map(item => `${item.quantity} x ${item.description || item.custom.name}`).join(', ')
+        : 'No items found';
+
       // Extract delivery details from the session metadata
-      const deliveryDate = session.metadata.deliveryDate;
-      const deliveryTime = session.metadata.deliveryTime;
-      const cartItems = session.display_items.map(
-        item => `${item.quantity} x ${item.custom.name}`
-      ).join(', ');
+      const deliveryDate = session.metadata?.deliveryDate || 'Not provided';
+      const deliveryTime = session.metadata?.deliveryTime || 'Not provided';
 
       // Send an email with order details
       await sendOrderEmail({
-        to: 'jmorestache@outlook.com',
+        to: 'your-email@example.com',
         subject: 'New Order Received',
         text: `You have received a new order.
 
