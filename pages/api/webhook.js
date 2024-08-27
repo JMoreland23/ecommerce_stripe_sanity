@@ -46,7 +46,7 @@ export default async function handler(req, res) {
 
       // Send an email with order details
       await sendOrderEmail({
-        to: 'your-email@example.com',
+        to: 'Jmorestache@outlook.com',
         subject: 'New Order Received',
         text: `You have received a new order.
 
