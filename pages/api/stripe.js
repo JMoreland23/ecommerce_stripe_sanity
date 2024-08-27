@@ -12,6 +12,9 @@ export default async function handler(req, res) {
             mode: 'payment',
             payment_method_types: ['card'],
             billing_address_collection: 'auto',
+            shipping_address_collection: {
+              allowed_countries: ['US', 'CA'], // Add countries here as needed
+            },
             shipping_options:[
                 { shipping_rate: 'shr_1M0QLHBxzlriU0UItHJ5tZCH'},
                 { shipping_rate: 'shr_1M0QM1BxzlriU0UIPd03dDTC'}
