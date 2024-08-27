@@ -28,6 +28,12 @@ export default async function handler(req, res) {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
 
+       // Process your webhook here
+       console.log('Session Metadata:', session.metadata);
+
+       // Example: Log the payment details to the console
+       console.log(`Payment for session ${session.id} succeeded!`);
+       
       // Extract delivery details from the session metadata
       const deliveryDate = session.metadata.deliveryDate;
       const deliveryTime = session.metadata.deliveryTime;
