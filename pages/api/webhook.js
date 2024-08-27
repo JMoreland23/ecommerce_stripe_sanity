@@ -73,10 +73,15 @@ Payment Details:
 
 async function sendOrderEmail({ to, subject, text }) {
   const transporter = nodemailer.createTransport({
-    service: 'gmail', // Or another email service
+    host: 'smtp.office365.com', // Outlook SMTP server
+    port: 587, // Port for TLS
+    secure: false, // Use TLS
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: process.env.EMAIL_USER, // Your Outlook email address
+      pass: process.env.EMAIL_PASS, // Your Outlook email password
+    },
+    tls: {
+      ciphers: 'SSLv3', // Ensure secure connection
     },
   });
 
