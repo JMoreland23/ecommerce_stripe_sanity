@@ -51,7 +51,7 @@ export default async function handler(req, res) {
         text: `You have received a new order.
 
 Order Details:
-- Items: ${cartItems}
+- Items: ${session.items}
 - Delivery Date: ${deliveryDate}
 - Delivery Time: ${deliveryTime}
 - Customer Email: ${session.customer_email}
