@@ -75,7 +75,7 @@ async function sendOrderEmail({ to, subject, text }) {
   const transporter = nodemailer.createTransport({
     host: 'mail.morelandmediadesign.com', // Replace with your domain's mail server
     port: 587, // Use 465 for SSL, or 587 for TLS
-    secure: true, // Set to true if using port 465, false if using port 587 with TLS
+    secure: false, // Set to true if using port 465, false if using port 587 with TLS
     auth: {
       user: process.env.EMAIL_USER, // Your Bluehost email address
       pass: process.env.EMAIL_PASS, // Your email password
